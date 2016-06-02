@@ -1,0 +1,22 @@
+{
+  "name": "ld-signature-demo",
+  "version": "0.1.0",
+  "moduleType": [
+    "amd"
+  ],
+  "main": "./main.js",
+  "ignore": [
+    "bower_components",
+    "lib",
+    "node_modules",
+    "package.json"
+  ],
+  "description": "Linked Data Signature Demo",
+  "dependencies": {
+    "bedrock-idp": "^5.0.0",
+    "bootstrap": "~3.3.4",
+    "es6-promise": "^2.0.1",
+    "requirejs": "~2.1.15",
+    "jsonld-signatures": "^1.1.5"
+  }
+}
