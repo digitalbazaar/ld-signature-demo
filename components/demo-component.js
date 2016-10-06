@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2016 Digital Bazaar, Inc. All rights reserved.
  */
-define(['jsonld-signatures', 'jsonld', 'forge', 'async'], 
+define(['jsonld-signatures', 'jsonld', 'forge', 'async'],
   function(jsigs, jsonld, forge, async) {
 
 'use strict';
@@ -14,14 +14,13 @@ function register(module) {
 }
 
 /* @ngInject */
-function Ctrl($anchorScroll, $sce, $scope,
-  config, brIdentityService) {
+function Ctrl($anchorScroll, $sce, $scope, config) {
   var self = this;
   self.jsonld = config.data['ld-signing-demo'].defaultJsonLD;
   self.jsonldString = JSON.stringify(self.jsonld, null, 2);
   self.validJson = true;
   self.jsonErrorMessage = null;
-  
+
   self.signedJsonld = null;
   self.signedJsonldString = null;
 
@@ -29,7 +28,7 @@ function Ctrl($anchorScroll, $sce, $scope,
   self.verifyLoading = false;
 
   var identity = config.data['ld-signing-demo'].identity;
-  
+
   jsigs = jsigs();
   jsigs.use('async', async);
   jsigs.use('forge', forge);
@@ -37,6 +36,13 @@ function Ctrl($anchorScroll, $sce, $scope,
   jsonld.documentLoader = jsonld.documentLoaders.xhr({
     usePromise: false
   });
+  var documentLoader = jsonld.documentLoader;
+  jsonld.documentLoader = function(url, callback) {
+    if(url in config.data.contextMap) {
+      url = config.data.contextMap[url];
+    }
+    return documentLoader(url, callback);
+  };
   jsigs.use('jsonld', jsonld);
 
   self.signingKey = config.data['ld-signing-demo'].publicKey;
@@ -86,13 +92,14 @@ function Ctrl($anchorScroll, $sce, $scope,
     jsigs.sign(self.jsonld, opts, function(err, signed) {
       self.signedJsonld = signed;
       self.signedJsonldString = JSON.stringify(signed, null, 2);
-      self.signedJsonldHtml = _markJsonString(self.signedJsonldString, [/*{
+      self.signedJsonldHtml = _markJsonString(self.signedJsonldString, [/* {
         value: '"signature"',
         color: 'rgba(15, 241, 243, 0.28)'
-      },*/ {
-        value: '"creator"',
-        color: 'rgba(255, 214, 0, 0.2)'
-      }]);
+      },*/
+        {
+          value: '"creator"',
+          color: 'rgba(255, 214, 0, 0.2)'
+        }]);
       self.signatureLoading = false;
       $scope.$apply();
       $anchorScroll('signed');
@@ -101,13 +108,13 @@ function Ctrl($anchorScroll, $sce, $scope,
 
   self.verifyJson = function() {
     self.verifyLoading = true;
-    jsigs.verify(self.signedJsonld, function(err, verified) {
+    jsigs.verify(self.signedJsonld, function(err) {
       if(!err) {
         self.jsonVerified = true;
       }
       self.verifyLoading = false;
       $scope.$apply();
-    })
+    });
   };
 
   function _convertJsonString() {

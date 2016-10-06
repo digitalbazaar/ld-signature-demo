@@ -13,6 +13,7 @@
   ],
   "description": "Linked Data Signature Demo",
   "dependencies": {
+    "bedrock-angular": "^2.3.5",
     "bedrock-idp": "^5.0.0",
     "bootstrap": "~3.3.4",
     "es6-promise": "^2.0.1",

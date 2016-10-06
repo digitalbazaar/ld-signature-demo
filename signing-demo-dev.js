@@ -5,6 +5,6 @@
  */
 var bedrock = require('bedrock');
 
-require('./lib/demo');
+require('./lib');
 
 bedrock.start();

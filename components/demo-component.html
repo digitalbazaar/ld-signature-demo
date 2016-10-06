@@ -15,7 +15,7 @@
     <pre><span ng-bind-html="$ctrl.signingKeyHtml"></span></pre>
   </div>
 </div>
-<p><mark style="background-color: rgba(255, 0, 0, 0.13);">owner:</mark> The entity that owns the signing key. The document at this URL must contain a list of held public keys, so that a third party can verify that the JSON-LD signature was actually signed by this entity. 
+<p><mark style="background-color: rgba(255, 0, 0, 0.13);">owner:</mark> The entity that owns the signing key. The document at this URL must contain a list of held public keys, so that a third party can verify that the JSON-LD signature was actually signed by this entity.
 </p>
 <p><mark style="background-color: rgba(255, 214, 0, 0.2);">id:</mark> The ID of the signing key. A third party can go to this URL and view the public document of the key (which contains all of the information above, minus the privateKey field).</p>
 
@@ -24,9 +24,9 @@
 <span ng-show="$ctrl.signatureLoading">
   <i class="fa fa-refresh fa-spin text-muted"></i>
 </span>
-<br id="signed"></br>
+<br id="signed">
 <div ng-show="$ctrl.signedJsonldString">
-  <hr></hr>
+  <hr>
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <div class="panel panel-default">
@@ -51,8 +51,9 @@
 
   The third party can then dereference the
   <mark style="background-color: rgba(255, 0, 0, 0.13);">owner</mark> document and verify that it contains the public key
-  used to perform the signature. <b>The signature is only considered authentic if the signature's creator ID is present in the owner's document.</b> //todo: explain why</p>
-  <p>//TODO Text about verification -- how detailed do we need to get on actually verifying the signatures with the public key material, etc</p>
+  used to perform the signature. <b>The signature is only considered authentic if the signature's creator ID is present in the owner's document.</b>
+  <!-- //todo: explain why
+  <p>//TODO Text about verification -- how detailed do we need to get on actually verifying the signatures with the public key material, etc</p> -->
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <label>Key Owner Document</label>
@@ -67,6 +68,6 @@
 </div>
 
 <div ng-show="$ctrl.jsonVerified">
-  <br></br>
-  <p>JSON-LD Verified, signed by <mark style="background-color: rgba(255, 0, 0, 0.13);">{{$ctrl.identity.id}}</mark>
+  <br>
+  <p>JSON-LD Verified, signed by <mark style="background-color: rgba(255, 0, 0, 0.13);">{{$ctrl.identity.id}}</mark></p>
 </div>
