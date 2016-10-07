@@ -1,14 +1,24 @@
-var config = require('bedrock').config;
+var bedrock = require('bedrock');
+var config = bedrock.config;
 var path = require('path');
+var brServer = require('bedrock-server');
 
 config.views.vars.minify = true;
 
+// only run application on HTTP port
+bedrock.events.on('bedrock-express.ready', function(app) {
+  // attach express to regular http
+  brServer.servers.http.on('request', app);
+  // cancel default behavior of attaching to HTTPS
+  return false;
+});
+
 // server info
-config.server.port = 443;
+// config.server.port = 443;
 config.server.bindAddr = ['lds.json-ld.org'];
 config.server.domain = 'lds.json-ld.org';
 config.server.host = 'lds.json-ld.org';
-config.server.baseUri = 'https://' + config.server.host;
+config.server.baseUri = 'http://' + config.server.host;
 
 // core configuration
 config.core.workers = 1;
