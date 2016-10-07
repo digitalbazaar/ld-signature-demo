@@ -14,7 +14,8 @@ bedrock.events.on('bedrock-express.ready', function(app) {
 });
 
 // server info
-// config.server.port = 443;
+config.server.port = 443;
+config.server.httpPort = 80;
 config.server.bindAddr = ['lds.json-ld.org'];
 config.server.domain = 'lds.json-ld.org';
 config.server.host = 'lds.json-ld.org';
